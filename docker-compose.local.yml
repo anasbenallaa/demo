@@ -27,9 +27,11 @@ services:
     app:
         build:
             context: .
-            dockerfile: Dockerfile
+            # Builds on top of the pushed nexudev/laravel-starter runtime image
+            # (skips the from-source PHP-extension compile).
+            dockerfile: Dockerfile.production
             target: app
-        image: demo-app:dev
+        image: laravel-starter:local
         restart: unless-stopped
         # Resolves host-published services from inside the container (also on Linux).
         extra_hosts:

@@ -63,7 +63,7 @@ services:
             context: .
             dockerfile: Dockerfile
             target: app
-        image: demo-app:dev
+        image: laravel-starter:dev
         restart: unless-stopped
         environment:
             <<: *app-env

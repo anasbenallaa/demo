@@ -18,6 +18,8 @@
 ARG RUNTIME_IMAGE=nexudev/laravel-starter:latest
 ARG NODE_IMAGE=node:22-bookworm-slim
 
+# Plain FROM: buildx resolves this to the build's target platform, matching the
+# stages that consume the copied Node binary. (The runtime base is multi-arch.)
 FROM ${NODE_IMAGE} AS node
 
 # ---------------------------------------------------------------------------
