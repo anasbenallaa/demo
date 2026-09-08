@@ -1,35 +1,47 @@
 import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar';
 import { useInitials } from '@/hooks/use-initials';
+import { cn } from '@/lib/utils';
 import type { User } from '@/types';
 
 export function UserInfo({
     user,
     showEmail = false,
+    showName = true,
+    avatarClassName,
 }: {
     user: User;
     showEmail?: boolean;
+    showName?: boolean;
+    avatarClassName?: string;
 }) {
     const getInitials = useInitials();
     const showAvatar = Boolean(user.avatar && user.avatar !== '');
 
     return (
         <>
-            <Avatar className="h-8 w-8 overflow-hidden rounded-lg">
+            <Avatar
+                className={cn(
+                    'h-8 w-8 shrink-0 overflow-hidden rounded-full',
+                    avatarClassName,
+                )}
+            >
                 {showAvatar ? (
                     <AvatarImage src={user.avatar} alt={user.name} />
                 ) : null}
-                <AvatarFallback className="rounded-lg text-black dark:text-white">
+                <AvatarFallback className="rounded-full text-xs text-black dark:text-white">
                     {getInitials(user.name)}
                 </AvatarFallback>
             </Avatar>
-            <div className="grid flex-1 text-left text-sm leading-tight">
-                <span className="truncate font-medium">{user.name}</span>
-                {showEmail ? (
-                    <span className="text-muted-foreground truncate text-xs">
-                        {user.email}
-                    </span>
-                ) : null}
-            </div>
+            {showName ? (
+                <div className="grid flex-1 text-left text-sm leading-tight">
+                    <span className="truncate font-medium">{user.name}</span>
+                    {showEmail ? (
+                        <span className="text-muted-foreground truncate text-xs">
+                            {user.email}
+                        </span>
+                    ) : null}
+                </div>
+            ) : null}
         </>
     );
 }
