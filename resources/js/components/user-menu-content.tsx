@@ -4,6 +4,7 @@ import {
     ChevronDown,
     LogOut,
     Settings,
+    Shield,
     User as UserIcon,
 } from 'lucide-react';
 import { useState } from 'react';
@@ -20,6 +21,7 @@ import { useMobileNavigation } from '@/hooks/use-mobile-navigation';
 import { cn } from '@/lib/utils';
 import { logout } from '@/routes';
 import { edit } from '@/routes/profile';
+import { edit as editSecurity } from '@/routes/security';
 import type { User } from '@/types';
 
 const appearanceOptions: { value: Appearance; label: string }[] = [
@@ -60,6 +62,18 @@ export function UserMenuContent({ user }: Props) {
                     >
                         <UserIcon className="mr-2" />
                         Profile
+                    </Link>
+                </DropdownMenuItem>
+
+                <DropdownMenuItem asChild>
+                    <Link
+                        className="block w-full cursor-pointer"
+                        href={editSecurity()}
+                        prefetch
+                        onClick={cleanup}
+                    >
+                        <Shield className="mr-2" />
+                        Security
                     </Link>
                 </DropdownMenuItem>
 
