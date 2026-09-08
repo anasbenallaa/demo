@@ -1,5 +1,11 @@
 import { Link, router } from '@inertiajs/react';
-import { Check, ChevronDown, LogOut, Palette, Settings } from 'lucide-react';
+import {
+    Check,
+    ChevronDown,
+    LogOut,
+    Settings,
+    User as UserIcon,
+} from 'lucide-react';
 import { useState } from 'react';
 import {
     DropdownMenuGroup,
@@ -52,8 +58,8 @@ export function UserMenuContent({ user }: Props) {
                         prefetch
                         onClick={cleanup}
                     >
-                        <Settings className="mr-2" />
-                        Settings
+                        <UserIcon className="mr-2" />
+                        Profile
                     </Link>
                 </DropdownMenuItem>
 
@@ -65,7 +71,7 @@ export function UserMenuContent({ user }: Props) {
                         setAppearanceOpen((open) => !open);
                     }}
                 >
-                    <Palette className="mr-2" />
+                    <Settings className="mr-2" />
                     Appearance
                     <ChevronDown
                         className={cn(
