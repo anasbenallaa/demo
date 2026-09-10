@@ -1,6 +1,7 @@
 import { Home09Icon } from '@hugeicons/core-free-icons';
 import { Link } from '@inertiajs/react';
 import AppLogo from '@/components/app-logo';
+import { GlobalSearch } from '@/components/global-search';
 import { NavMain } from '@/components/nav-main';
 import { NavUser } from '@/components/nav-user';
 import {
@@ -39,6 +40,8 @@ export function AppSidebar() {
                         </SidebarMenuButton>
                     </SidebarMenuItem>
                 </SidebarMenu>
+
+                <GlobalSearch />
             </SidebarHeader>
 
             <SidebarContent>
