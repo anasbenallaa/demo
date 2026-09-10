@@ -1,9 +1,14 @@
+import {
+    BookOpen01Icon,
+    Folder01Icon,
+    Home09Icon,
+    Menu01Icon,
+    Search01Icon,
+} from '@hugeicons/core-free-icons';
 import { Link, usePage } from '@inertiajs/react';
-import { BookOpen, Folder, LayoutGrid, Menu, Search } from 'lucide-react';
 import AppLogo from '@/components/app-logo';
 import AppLogoIcon from '@/components/app-logo-icon';
 import { Breadcrumbs } from '@/components/breadcrumbs';
-import { TeamSwitcher } from '@/components/team-switcher';
 import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar';
 import { Button } from '@/components/ui/button';
 import {
@@ -11,6 +16,7 @@ import {
     DropdownMenuContent,
     DropdownMenuTrigger,
 } from '@/components/ui/dropdown-menu';
+import { Icon } from '@/components/ui/icon';
 import {
     NavigationMenu,
     NavigationMenuItem,
@@ -45,12 +51,12 @@ const rightNavItems: NavItem[] = [
     {
         title: 'Repository',
         href: 'https://github.com/laravel/react-starter-kit',
-        icon: Folder,
+        icon: Folder01Icon,
     },
     {
         title: 'Documentation',
         href: 'https://laravel.com/docs/starter-kits#react',
-        icon: BookOpen,
+        icon: BookOpen01Icon,
     },
 ];
 
@@ -59,16 +65,16 @@ const activeItemStyles =
 
 export function AppHeader({ breadcrumbs = [] }: Props) {
     const page = usePage();
-    const { auth, currentTeam } = page.props;
+    const { auth } = page.props;
     const getInitials = useInitials();
     const { isCurrentUrl, whenCurrentUrl } = useCurrentUrl();
-    const dashboardUrl = currentTeam ? dashboard(currentTeam.slug) : '/';
+    const dashboardUrl = dashboard();
 
     const mainNavItems: NavItem[] = [
         {
             title: 'Dashboard',
             href: dashboardUrl,
-            icon: LayoutGrid,
+            icon: Home09Icon,
         },
     ];
 
@@ -85,7 +91,10 @@ export function AppHeader({ breadcrumbs = [] }: Props) {
                                     size="icon"
                                     className="mr-2 h-[34px] w-[34px]"
                                 >
-                                    <Menu className="h-5 w-5" />
+                                    <Icon
+                                        iconNode={Menu01Icon}
+                                        className="h-5 w-5"
+                                    />
                                 </Button>
                             </SheetTrigger>
                             <SheetContent
@@ -108,7 +117,10 @@ export function AppHeader({ breadcrumbs = [] }: Props) {
                                                     className="flex items-center space-x-2 font-medium"
                                                 >
                                                     {item.icon && (
-                                                        <item.icon className="h-5 w-5" />
+                                                        <Icon
+                                                            iconNode={item.icon}
+                                                            className="h-5 w-5"
+                                                        />
                                                     )}
                                                     <span>{item.title}</span>
                                                 </Link>
@@ -125,7 +137,10 @@ export function AppHeader({ breadcrumbs = [] }: Props) {
                                                     className="flex items-center space-x-2 font-medium"
                                                 >
                                                     {item.icon && (
-                                                        <item.icon className="h-5 w-5" />
+                                                        <Icon
+                                                            iconNode={item.icon}
+                                                            className="h-5 w-5"
+                                                        />
                                                     )}
                                                     <span>{item.title}</span>
                                                 </a>
@@ -166,7 +181,10 @@ export function AppHeader({ breadcrumbs = [] }: Props) {
                                             )}
                                         >
                                             {item.icon && (
-                                                <item.icon className="mr-2 h-4 w-4" />
+                                                <Icon
+                                                    iconNode={item.icon}
+                                                    className="mr-2 h-4 w-4"
+                                                />
                                             )}
                                             {item.title}
                                         </Link>
@@ -186,7 +204,10 @@ export function AppHeader({ breadcrumbs = [] }: Props) {
                                 size="icon"
                                 className="group h-9 w-9 cursor-pointer"
                             >
-                                <Search className="size-5! opacity-80 group-hover:opacity-100" />
+                                <Icon
+                                    iconNode={Search01Icon}
+                                    className="size-5! opacity-80 group-hover:opacity-100"
+                                />
                             </Button>
                             <div className="ml-1 hidden gap-1 lg:flex">
                                 {rightNavItems.map((item) => (
@@ -206,7 +227,10 @@ export function AppHeader({ breadcrumbs = [] }: Props) {
                                                         {item.title}
                                                     </span>
                                                     {item.icon && (
-                                                        <item.icon className="size-5 opacity-80 group-hover:opacity-100" />
+                                                        <Icon
+                                                            iconNode={item.icon}
+                                                            className="size-5 opacity-80 group-hover:opacity-100"
+                                                        />
                                                     )}
                                                 </a>
                                             </TooltipTrigger>
@@ -239,8 +263,6 @@ export function AppHeader({ breadcrumbs = [] }: Props) {
                                 <UserMenuContent user={auth.user} />
                             </DropdownMenuContent>
                         </DropdownMenu>
-
-                        <TeamSwitcher inHeader />
                     </div>
                 </div>
             </div>

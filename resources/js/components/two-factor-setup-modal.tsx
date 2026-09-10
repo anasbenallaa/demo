@@ -1,6 +1,6 @@
+import { Copy01Icon, QrCodeIcon, Tick02Icon } from '@hugeicons/core-free-icons';
 import { Form } from '@inertiajs/react';
 import { REGEXP_ONLY_DIGITS } from 'input-otp';
-import { Check, Copy, ScanLine } from 'lucide-react';
 import { useCallback, useEffect, useMemo, useRef, useState } from 'react';
 import AlertError from '@/components/alert-error';
 import InputError from '@/components/input-error';
@@ -12,6 +12,7 @@ import {
     DialogHeader,
     DialogTitle,
 } from '@/components/ui/dialog';
+import { Icon } from '@/components/ui/icon';
 import {
     InputOTP,
     InputOTPGroup,
@@ -43,7 +44,10 @@ function GridScanIcon() {
                         />
                     ))}
                 </div>
-                <ScanLine className="text-foreground relative z-20 size-6" />
+                <Icon
+                    iconNode={QrCodeIcon}
+                    className="text-foreground relative z-20 size-6"
+                />
             </div>
         </div>
     );
@@ -64,7 +68,7 @@ function TwoFactorSetupStep({
 }) {
     const { resolvedAppearance } = useAppearance();
     const [copiedText, copy] = useClipboard();
-    const IconComponent = copiedText === manualSetupKey ? Check : Copy;
+    const copyIcon = copiedText === manualSetupKey ? Tick02Icon : Copy01Icon;
 
     return (
         <>
@@ -126,7 +130,10 @@ function TwoFactorSetupStep({
                                         onClick={() => copy(manualSetupKey)}
                                         className="border-border hover:bg-muted border-l px-3"
                                     >
-                                        <IconComponent className="w-4" />
+                                        <Icon
+                                            iconNode={copyIcon}
+                                            className="w-4"
+                                        />
                                     </button>
                                 </>
                             )}

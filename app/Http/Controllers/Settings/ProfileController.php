@@ -9,6 +9,7 @@ use Illuminate\Contracts\Auth\MustVerifyEmail;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Storage;
 use Inertia\Inertia;
 use Inertia\Response;
 
@@ -39,6 +40,47 @@ class ProfileController extends Controller
         $request->user()->save();
 
         Inertia::flash('toast', ['type' => 'success', 'message' => __('Profile updated.')]);
+
+        return to_route('profile.edit');
+    }
+
+    /**
+     * Upload or replace the user's avatar (stored on the S3 disk).
+     */
+    public function updateAvatar(Request $request): RedirectResponse
+    {
+        $request->validate([
+            'avatar' => ['required', 'image', 'mimes:jpeg,jpg,png,webp', 'max:1024'],
+        ]);
+
+        $user = $request->user();
+
+        $path = $request->file('avatar')->storePublicly('settings/profile/avatar', 's3');
+
+        if ($user->avatar_path && $user->avatar_path !== $path) {
+            Storage::disk('s3')->delete($user->avatar_path);
+        }
+
+        $user->forceFill(['avatar_path' => $path])->save();
+
+        Inertia::flash('toast', ['type' => 'success', 'message' => __('Profile picture updated.')]);
+
+        return to_route('profile.edit');
+    }
+
+    /**
+     * Remove the user's avatar.
+     */
+    public function deleteAvatar(Request $request): RedirectResponse
+    {
+        $user = $request->user();
+
+        if ($user->avatar_path) {
+            Storage::disk('s3')->delete($user->avatar_path);
+            $user->forceFill(['avatar_path' => null])->save();
+        }
+
+        Inertia::flash('toast', ['type' => 'success', 'message' => __('Profile picture removed.')]);
 
         return to_route('profile.edit');
     }

@@ -1,10 +1,11 @@
+import { ShieldCheckIcon } from '@hugeicons/core-free-icons';
 import { Form } from '@inertiajs/react';
-import { ShieldCheck } from 'lucide-react';
 import { useEffect, useRef, useState } from 'react';
-import Heading from '@/components/heading';
+import SettingsCard from '@/components/settings-card';
 import TwoFactorRecoveryCodes from '@/components/two-factor-recovery-codes';
 import TwoFactorSetupModal from '@/components/two-factor-setup-modal';
 import { Button } from '@/components/ui/button';
+import { Icon } from '@/components/ui/icon';
 import { useTwoFactorAuth } from '@/hooks/use-two-factor-auth';
 import { disable, enable } from '@/routes/two-factor';
 
@@ -44,22 +45,45 @@ export default function ManageTwoFactor(props: Props) {
         return null;
     }
 
-    return (
-        <div className="space-y-6">
-            <Heading
-                variant="small"
-                title="Two-factor authentication"
-                description="Manage your two-factor authentication settings"
-            />
-            {twoFactorEnabled ? (
-                <div className="flex flex-col items-start justify-start space-y-4">
-                    <p className="text-muted-foreground text-sm">
-                        You will be prompted for a secure, random pin during
-                        login, which you can retrieve from the TOTP-supported
-                        application on your phone.
-                    </p>
+    const enableAction = hasSetupData ? (
+        <Button
+            variant="outline"
+            size="sm"
+            onClick={() => setShowSetupModal(true)}
+        >
+            <Icon iconNode={ShieldCheckIcon} />
+            Continue setup
+        </Button>
+    ) : (
+        <Form {...enable.form()} onSuccess={() => setShowSetupModal(true)}>
+            {({ processing }) => (
+                <Button
+                    variant="outline"
+                    size="sm"
+                    type="submit"
+                    disabled={processing}
+                >
+                    Configure 2FA
+                </Button>
+            )}
+        </Form>
+    );
 
-                    <div className="relative inline">
+    return (
+        <>
+            <SettingsCard
+                title="Two-factor authentication"
+                description="Add a time-based one-time password to protect your account."
+                action={twoFactorEnabled ? undefined : enableAction}
+            >
+                {twoFactorEnabled ? (
+                    <div className="space-y-4">
+                        <p className="text-muted-foreground text-sm">
+                            You will be prompted for a secure, random pin during
+                            login, which you can retrieve from the
+                            TOTP-supported application on your phone.
+                        </p>
+
                         <Form {...disable.form()}>
                             {({ processing }) => (
                                 <Button
@@ -71,44 +95,31 @@ export default function ManageTwoFactor(props: Props) {
                                 </Button>
                             )}
                         </Form>
-                    </div>
 
-                    <TwoFactorRecoveryCodes
-                        recoveryCodesList={recoveryCodesList}
-                        fetchRecoveryCodes={fetchRecoveryCodes}
-                        errors={errors}
-                    />
-                </div>
-            ) : (
-                <div className="flex flex-col items-start justify-start space-y-4">
-                    <p className="text-muted-foreground text-sm">
-                        When you enable two-factor authentication, you will be
-                        prompted for a secure pin during login. This pin can be
-                        retrieved from a TOTP-supported application on your
-                        phone.
-                    </p>
-
-                    <div>
-                        {hasSetupData ? (
-                            <Button onClick={() => setShowSetupModal(true)}>
-                                <ShieldCheck />
-                                Continue setup
-                            </Button>
-                        ) : (
-                            <Form
-                                {...enable.form()}
-                                onSuccess={() => setShowSetupModal(true)}
-                            >
-                                {({ processing }) => (
-                                    <Button type="submit" disabled={processing}>
-                                        Enable 2FA
-                                    </Button>
-                                )}
-                            </Form>
-                        )}
+                        <TwoFactorRecoveryCodes
+                            recoveryCodesList={recoveryCodesList}
+                            fetchRecoveryCodes={fetchRecoveryCodes}
+                            errors={errors}
+                        />
                     </div>
-                </div>
-            )}
+                ) : (
+                    <div className="border-border/70 flex flex-col items-center justify-center gap-2 rounded-lg border border-dashed px-6 py-10 text-center">
+                        <div className="bg-muted mb-2 flex size-12 items-center justify-center rounded-2xl">
+                            <Icon
+                                iconNode={ShieldCheckIcon}
+                                className="text-muted-foreground size-6"
+                            />
+                        </div>
+                        <p className="text-base font-semibold">
+                            Two-factor authentication is off
+                        </p>
+                        <p className="text-muted-foreground text-sm">
+                            Configure an authenticator app to add another
+                            sign-in check.
+                        </p>
+                    </div>
+                )}
+            </SettingsCard>
 
             <TwoFactorSetupModal
                 isOpen={showSetupModal}
@@ -121,6 +132,6 @@ export default function ManageTwoFactor(props: Props) {
                 fetchSetupData={fetchSetupData}
                 errors={errors}
             />
-        </div>
+        </>
     );
 }

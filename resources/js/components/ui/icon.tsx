@@ -1,14 +1,33 @@
-import type { LucideIcon } from 'lucide-react';
+import { HugeiconsIcon, type IconSvgElement } from '@hugeicons/react';
+import { forwardRef } from 'react';
 
-interface IconProps {
-    iconNode?: LucideIcon | null;
-    className?: string;
-}
+export type { IconSvgElement };
 
-export function Icon({ iconNode: IconComponent, className }: IconProps) {
-    if (!IconComponent) {
-        return null;
-    }
+/**
+ * App-wide icon type. Every icon in the app is a HugeIcons SVG object
+ * imported from `@hugeicons/core-free-icons`.
+ */
+export type AppIcon = IconSvgElement;
 
-    return <IconComponent className={className} />;
-}
+type IconProps = Omit<React.ComponentProps<typeof HugeiconsIcon>, 'icon'> & {
+    /** A HugeIcons icon, e.g. `import { Home01Icon } from '@hugeicons/core-free-icons'`. */
+    iconNode?: IconSvgElement | null;
+};
+
+/**
+ * Thin wrapper around HugeIcons' `<HugeiconsIcon />` so the rest of the app has
+ * a single, stable icon entry point. Renders nothing when no icon is provided.
+ */
+export const Icon = forwardRef<SVGSVGElement, IconProps>(
+    ({ iconNode, ...props }, ref) => {
+        if (!iconNode) {
+            return null;
+        }
+
+        return <HugeiconsIcon ref={ref} icon={iconNode} {...props} />;
+    },
+);
+
+Icon.displayName = 'Icon';
+
+export { HugeiconsIcon };

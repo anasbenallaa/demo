@@ -1,10 +1,9 @@
-import { Link, usePage } from '@inertiajs/react';
-import { BookOpen, FolderGit2, LayoutGrid } from 'lucide-react';
+import { Home09Icon } from '@hugeicons/core-free-icons';
+import { Link } from '@inertiajs/react';
 import AppLogo from '@/components/app-logo';
-import { NavFooter } from '@/components/nav-footer';
+import { GlobalSearch } from '@/components/global-search';
 import { NavMain } from '@/components/nav-main';
 import { NavUser } from '@/components/nav-user';
-import { TeamSwitcher } from '@/components/team-switcher';
 import {
     Sidebar,
     SidebarContent,
@@ -13,39 +12,24 @@ import {
     SidebarMenu,
     SidebarMenuButton,
     SidebarMenuItem,
+    SidebarTrigger,
 } from '@/components/ui/sidebar';
 import { dashboard } from '@/routes';
 import type { NavItem } from '@/types';
 
 export function AppSidebar() {
-    const page = usePage();
-    const dashboardUrl = page.props.currentTeam
-        ? dashboard(page.props.currentTeam.slug)
-        : '/';
+    const dashboardUrl = dashboard();
 
     const mainNavItems: NavItem[] = [
         {
             title: 'Dashboard',
             href: dashboardUrl,
-            icon: LayoutGrid,
-        },
-    ];
-
-    const footerNavItems: NavItem[] = [
-        {
-            title: 'Repository',
-            href: 'https://github.com/laravel/react-starter-kit',
-            icon: FolderGit2,
-        },
-        {
-            title: 'Documentation',
-            href: 'https://laravel.com/docs/starter-kits#react',
-            icon: BookOpen,
+            icon: Home09Icon,
         },
     ];
 
     return (
-        <Sidebar collapsible="icon" variant="inset">
+        <Sidebar collapsible="icon" variant="sidebar">
             <SidebarHeader>
                 <SidebarMenu>
                     <SidebarMenuItem>
@@ -56,11 +40,8 @@ export function AppSidebar() {
                         </SidebarMenuButton>
                     </SidebarMenuItem>
                 </SidebarMenu>
-                <SidebarMenu>
-                    <SidebarMenuItem>
-                        <TeamSwitcher />
-                    </SidebarMenuItem>
-                </SidebarMenu>
+
+                <GlobalSearch />
             </SidebarHeader>
 
             <SidebarContent>
@@ -68,8 +49,12 @@ export function AppSidebar() {
             </SidebarContent>
 
             <SidebarFooter>
-                <NavFooter items={footerNavItems} className="mt-auto" />
-                <NavUser />
+                <div className="flex items-center gap-2 group-data-[collapsible=icon]:flex-col-reverse group-data-[collapsible=icon]:gap-1">
+                    <div className="min-w-0 flex-1 group-data-[collapsible=icon]:flex-none">
+                        <NavUser />
+                    </div>
+                    <SidebarTrigger className="text-sidebar-foreground/70 hover:text-sidebar-foreground size-8 shrink-0 rounded-md focus-visible:ring-0" />
+                </div>
             </SidebarFooter>
         </Sidebar>
     );
