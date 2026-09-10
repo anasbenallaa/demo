@@ -1,5 +1,5 @@
+import { Home09Icon } from '@hugeicons/core-free-icons';
 import { Link } from '@inertiajs/react';
-import { LayoutGrid } from 'lucide-react';
 import AppLogo from '@/components/app-logo';
 import { NavMain } from '@/components/nav-main';
 import { NavUser } from '@/components/nav-user';
@@ -23,7 +23,7 @@ export function AppSidebar() {
         {
             title: 'Dashboard',
             href: dashboardUrl,
-            icon: LayoutGrid,
+            icon: Home09Icon,
         },
     ];
 

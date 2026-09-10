@@ -1,4 +1,5 @@
 import { Link } from '@inertiajs/react';
+import { Icon } from '@/components/ui/icon';
 import {
     SidebarGroup,
     SidebarGroupLabel,
@@ -24,7 +25,7 @@ export function NavMain({ items }: { items: NavItem[] }) {
                             tooltip={{ children: item.title }}
                         >
                             <Link href={item.href} prefetch>
-                                {item.icon && <item.icon />}
+                                {item.icon && <Icon iconNode={item.icon} />}
                                 <span>{item.title}</span>
                             </Link>
                         </SidebarMenuButton>

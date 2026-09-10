@@ -1,12 +1,12 @@
-import { Link, router } from '@inertiajs/react';
 import {
-    Check,
-    ChevronDown,
-    LogOut,
-    Settings,
-    Shield,
-    User as UserIcon,
-} from 'lucide-react';
+    ArrowDown01Icon,
+    Logout01Icon,
+    Settings01Icon,
+    Shield01Icon,
+    Tick02Icon,
+    UserIcon,
+} from '@hugeicons/core-free-icons';
+import { Link, router } from '@inertiajs/react';
 import { useState } from 'react';
 import {
     DropdownMenuGroup,
@@ -14,6 +14,7 @@ import {
     DropdownMenuLabel,
     DropdownMenuSeparator,
 } from '@/components/ui/dropdown-menu';
+import { Icon } from '@/components/ui/icon';
 import { UserInfo } from '@/components/user-info';
 import type { Appearance } from '@/hooks/use-appearance';
 import { useAppearance } from '@/hooks/use-appearance';
@@ -60,7 +61,7 @@ export function UserMenuContent({ user }: Props) {
                         prefetch
                         onClick={cleanup}
                     >
-                        <UserIcon className="mr-2" />
+                        <Icon iconNode={UserIcon} className="mr-2" />
                         Profile
                     </Link>
                 </DropdownMenuItem>
@@ -72,7 +73,7 @@ export function UserMenuContent({ user }: Props) {
                         prefetch
                         onClick={cleanup}
                     >
-                        <Shield className="mr-2" />
+                        <Icon iconNode={Shield01Icon} className="mr-2" />
                         Security
                     </Link>
                 </DropdownMenuItem>
@@ -85,9 +86,10 @@ export function UserMenuContent({ user }: Props) {
                         setAppearanceOpen((open) => !open);
                     }}
                 >
-                    <Settings className="mr-2" />
+                    <Icon iconNode={Settings01Icon} className="mr-2" />
                     Appearance
-                    <ChevronDown
+                    <Icon
+                        iconNode={ArrowDown01Icon}
                         className={cn(
                             'ml-auto size-4 shrink-0 opacity-60 transition-transform duration-200',
                             appearanceOpen && 'rotate-180',
@@ -121,7 +123,10 @@ export function UserMenuContent({ user }: Props) {
                                         {label}
                                     </span>
                                     {appearance === value && (
-                                        <Check className="text-primary ml-auto size-4 shrink-0" />
+                                        <Icon
+                                            iconNode={Tick02Icon}
+                                            className="text-primary ml-auto size-4 shrink-0"
+                                        />
                                     )}
                                 </DropdownMenuItem>
                             ))}
@@ -137,7 +142,7 @@ export function UserMenuContent({ user }: Props) {
                     onClick={handleLogout}
                     data-test="logout-button"
                 >
-                    <LogOut className="mr-2" />
+                    <Icon iconNode={Logout01Icon} className="mr-2" />
                     Log out
                 </Link>
             </DropdownMenuItem>

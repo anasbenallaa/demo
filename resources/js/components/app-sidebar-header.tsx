@@ -1,11 +1,12 @@
+import { ArrowDown01Icon } from '@hugeicons/core-free-icons';
 import { usePage } from '@inertiajs/react';
-import { ChevronDown } from 'lucide-react';
 import { Breadcrumbs } from '@/components/breadcrumbs';
 import {
     DropdownMenu,
     DropdownMenuContent,
     DropdownMenuTrigger,
 } from '@/components/ui/dropdown-menu';
+import { Icon } from '@/components/ui/icon';
 import { SidebarTrigger } from '@/components/ui/sidebar';
 import { UserInfo } from '@/components/user-info';
 import { UserMenuContent } from '@/components/user-menu-content';
@@ -43,7 +44,10 @@ export function AppSidebarHeader({
                                 showName={false}
                                 avatarClassName="size-6"
                             />
-                            <ChevronDown className="size-4 shrink-0 opacity-60 transition-transform group-data-[state=open]:rotate-180" />
+                            <Icon
+                                iconNode={ArrowDown01Icon}
+                                className="size-4 shrink-0 opacity-60 transition-transform group-data-[state=open]:rotate-180"
+                            />
                         </button>
                     </DropdownMenuTrigger>
                     <DropdownMenuContent

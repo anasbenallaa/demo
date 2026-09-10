@@ -1,9 +1,10 @@
 // Components
+import { Loading03Icon } from '@hugeicons/core-free-icons';
 import { Form, Head } from '@inertiajs/react';
-import { LoaderCircle } from 'lucide-react';
 import InputError from '@/components/input-error';
 import TextLink from '@/components/text-link';
 import { Button } from '@/components/ui/button';
+import { Icon } from '@/components/ui/icon';
 import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
 import { login } from '@/routes';
@@ -45,7 +46,10 @@ export default function ForgotPassword({ status }: { status?: string }) {
                                     data-test="email-password-reset-link-button"
                                 >
                                     {processing && (
-                                        <LoaderCircle className="h-4 w-4 animate-spin" />
+                                        <Icon
+                                            iconNode={Loading03Icon}
+                                            className="h-4 w-4 animate-spin"
+                                        />
                                     )}
                                     Email password reset link
                                 </Button>

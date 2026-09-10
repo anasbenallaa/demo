@@ -1,10 +1,11 @@
+import { ArrowDown01Icon } from '@hugeicons/core-free-icons';
 import { usePage } from '@inertiajs/react';
-import { ChevronDown } from 'lucide-react';
 import {
     DropdownMenu,
     DropdownMenuContent,
     DropdownMenuTrigger,
 } from '@/components/ui/dropdown-menu';
+import { Icon } from '@/components/ui/icon';
 import { SidebarMenuButton } from '@/components/ui/sidebar';
 import { UserInfo } from '@/components/user-info';
 import { UserMenuContent } from '@/components/user-menu-content';
@@ -26,7 +27,10 @@ export function NavUser() {
                         user={auth.user}
                         avatarClassName="size-6 group-data-[collapsible=icon]:size-8!"
                     />
-                    <ChevronDown className="ml-auto size-4 shrink-0 opacity-60 group-data-[collapsible=icon]:hidden" />
+                    <Icon
+                        iconNode={ArrowDown01Icon}
+                        className="ml-auto size-4 shrink-0 opacity-60 group-data-[collapsible=icon]:hidden"
+                    />
                 </SidebarMenuButton>
             </DropdownMenuTrigger>
             <DropdownMenuContent

@@ -1,8 +1,14 @@
+import {
+    RefreshIcon,
+    SquareLock02Icon,
+    ViewIcon,
+    ViewOffSlashIcon,
+} from '@hugeicons/core-free-icons';
 import { Form } from '@inertiajs/react';
-import { Eye, EyeOff, LockKeyhole, RefreshCw } from 'lucide-react';
 import { useCallback, useEffect, useRef, useState } from 'react';
 import AlertError from '@/components/alert-error';
 import { Button } from '@/components/ui/button';
+import { Icon } from '@/components/ui/icon';
 import {
     Card,
     CardContent,
@@ -50,13 +56,17 @@ export default function TwoFactorRecoveryCodes({
         }
     }, [recoveryCodesList.length, fetchRecoveryCodes]);
 
-    const RecoveryCodeIconComponent = codesAreVisible ? EyeOff : Eye;
+    const recoveryCodeIcon = codesAreVisible ? ViewOffSlashIcon : ViewIcon;
 
     return (
         <Card>
             <CardHeader>
                 <CardTitle className="flex gap-3">
-                    <LockKeyhole className="size-4" aria-hidden="true" />
+                    <Icon
+                        iconNode={SquareLock02Icon}
+                        className="size-4"
+                        aria-hidden="true"
+                    />
                     2FA recovery codes
                 </CardTitle>
                 <CardDescription>
@@ -72,7 +82,8 @@ export default function TwoFactorRecoveryCodes({
                         aria-expanded={codesAreVisible}
                         aria-controls="recovery-codes-section"
                     >
-                        <RecoveryCodeIconComponent
+                        <Icon
+                            iconNode={recoveryCodeIcon}
                             className="size-4"
                             aria-hidden="true"
                         />
@@ -92,7 +103,8 @@ export default function TwoFactorRecoveryCodes({
                                     disabled={processing}
                                     aria-describedby="regenerate-warning"
                                 >
-                                    <RefreshCw /> Regenerate codes
+                                    <Icon iconNode={RefreshIcon} /> Regenerate
+                                    codes
                                 </Button>
                             )}
                         </Form>

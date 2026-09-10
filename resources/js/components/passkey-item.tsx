@@ -1,4 +1,4 @@
-import { KeyRound, Trash2 } from 'lucide-react';
+import { Delete02Icon, Key01Icon } from '@hugeicons/core-free-icons';
 import { useState } from 'react';
 import { Button } from '@/components/ui/button';
 import {
@@ -10,6 +10,7 @@ import {
     DialogTitle,
     DialogTrigger,
 } from '@/components/ui/dialog';
+import { Icon } from '@/components/ui/icon';
 import type { Passkey } from '@/types/auth';
 
 type Props = {
@@ -29,7 +30,10 @@ export default function PasskeyItem({ passkey, onDelete }: Props) {
         <div className="flex items-center justify-between border-b p-4 last:border-b-0">
             <div className="flex items-center gap-4">
                 <div className="bg-muted flex h-10 w-10 shrink-0 items-center justify-center rounded-xl">
-                    <KeyRound className="text-muted-foreground h-5 w-5" />
+                    <Icon
+                        iconNode={Key01Icon}
+                        className="text-muted-foreground h-5 w-5"
+                    />
                 </div>
                 <div className="space-y-1">
                     <div className="flex items-center gap-2.5">
@@ -63,7 +67,7 @@ export default function PasskeyItem({ passkey, onDelete }: Props) {
                         size="sm"
                         className="text-destructive hover:bg-destructive/10 hover:text-destructive"
                     >
-                        <Trash2 className="h-4 w-4" />
+                        <Icon iconNode={Delete02Icon} className="h-4 w-4" />
                         <span className="sr-only">Remove</span>
                     </Button>
                 </DialogTrigger>

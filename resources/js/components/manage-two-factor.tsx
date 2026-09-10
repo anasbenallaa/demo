@@ -1,10 +1,11 @@
+import { ShieldCheckIcon } from '@hugeicons/core-free-icons';
 import { Form } from '@inertiajs/react';
-import { ShieldCheck } from 'lucide-react';
 import { useEffect, useRef, useState } from 'react';
 import SettingsCard from '@/components/settings-card';
 import TwoFactorRecoveryCodes from '@/components/two-factor-recovery-codes';
 import TwoFactorSetupModal from '@/components/two-factor-setup-modal';
 import { Button } from '@/components/ui/button';
+import { Icon } from '@/components/ui/icon';
 import { useTwoFactorAuth } from '@/hooks/use-two-factor-auth';
 import { disable, enable } from '@/routes/two-factor';
 
@@ -50,7 +51,7 @@ export default function ManageTwoFactor(props: Props) {
             size="sm"
             onClick={() => setShowSetupModal(true)}
         >
-            <ShieldCheck />
+            <Icon iconNode={ShieldCheckIcon} />
             Continue setup
         </Button>
     ) : (
@@ -104,7 +105,10 @@ export default function ManageTwoFactor(props: Props) {
                 ) : (
                     <div className="border-border/70 flex flex-col items-center justify-center gap-2 rounded-lg border border-dashed px-6 py-10 text-center">
                         <div className="bg-muted mb-2 flex size-12 items-center justify-center rounded-2xl">
-                            <ShieldCheck className="text-muted-foreground size-6" />
+                            <Icon
+                                iconNode={ShieldCheckIcon}
+                                className="text-muted-foreground size-6"
+                            />
                         </div>
                         <p className="text-base font-semibold">
                             Two-factor authentication is off

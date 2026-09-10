@@ -1,6 +1,7 @@
-import { Eye, EyeOff } from 'lucide-react';
+import { ViewIcon, ViewOffSlashIcon } from '@hugeicons/core-free-icons';
 import type { ComponentProps, Ref } from 'react';
 import { useState } from 'react';
+import { Icon } from '@/components/ui/icon';
 import { Input } from '@/components/ui/input';
 import { cn } from '@/lib/utils';
 
@@ -27,9 +28,9 @@ export default function PasswordInput({
                 tabIndex={-1}
             >
                 {showPassword ? (
-                    <EyeOff className="size-4" />
+                    <Icon iconNode={ViewOffSlashIcon} className="size-4" />
                 ) : (
-                    <Eye className="size-4" />
+                    <Icon iconNode={ViewIcon} className="size-4" />
                 )}
             </button>
         </div>

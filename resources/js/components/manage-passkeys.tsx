@@ -1,8 +1,9 @@
+import { Key01Icon } from '@hugeicons/core-free-icons';
 import { router } from '@inertiajs/react';
-import { KeyRound } from 'lucide-react';
 import { destroy } from '@/actions/Laravel/Passkeys/Http/Controllers/PasskeyRegistrationController';
 import PasskeyItem from '@/components/passkey-item';
 import PasskeyRegistration from '@/components/passkey-register';
+import { Icon } from '@/components/ui/icon';
 import SettingsCard from '@/components/settings-card';
 import type { Passkey } from '@/types/auth';
 
@@ -15,7 +16,10 @@ const EmptyState = () => {
     return (
         <div className="border-border/70 flex flex-col items-center justify-center gap-2 rounded-lg border border-dashed px-6 py-10 text-center">
             <div className="bg-muted mb-2 flex size-12 items-center justify-center rounded-2xl">
-                <KeyRound className="text-muted-foreground size-6" />
+                <Icon
+                    iconNode={Key01Icon}
+                    className="text-muted-foreground size-6"
+                />
             </div>
             <p className="text-base font-semibold">No passkeys yet</p>
             <p className="text-muted-foreground text-sm">
