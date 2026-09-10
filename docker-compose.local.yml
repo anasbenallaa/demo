@@ -64,6 +64,7 @@ services:
             CACHE_STORE: redis
             QUEUE_CONNECTION: redis
             SESSION_DRIVER: redis
+            SESSION_COOKIE: app_session
             BROADCAST_CONNECTION: log
 
             # --- existing MinIO container ---------------------------------

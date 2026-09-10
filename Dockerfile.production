@@ -87,6 +87,8 @@ COPY --from=frontend --chown=app:app /app/public/build ./public/build
 # Keep the repo as the source of truth for the runtime config, even if the
 # base image was published with older copies.
 COPY docker/php/opcache.ini /usr/local/etc/php/conf.d/z-opcache.ini
+COPY docker/php/hardening.ini /usr/local/etc/php/conf.d/zz-hardening.ini
+COPY docker/frankenphp/Caddyfile /etc/frankenphp/Caddyfile
 COPY docker/supervisor/supervisord.conf /etc/supervisor/supervisord.conf
 COPY docker/entrypoint.sh /usr/local/bin/entrypoint
 RUN chmod +x /usr/local/bin/entrypoint

@@ -32,6 +32,8 @@ RUN set -eux; \
     rm -rf /var/lib/apt/lists/*
 
 COPY docker/php/opcache.ini /usr/local/etc/php/conf.d/z-opcache.ini
+COPY docker/php/hardening.ini /usr/local/etc/php/conf.d/zz-hardening.ini
+COPY docker/frankenphp/Caddyfile /etc/frankenphp/Caddyfile
 COPY --from=composer /usr/bin/composer /usr/local/bin/composer
 
 # Non-root application user (uid/gid 1000).

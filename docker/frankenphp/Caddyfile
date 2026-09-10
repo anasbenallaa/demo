@@ -1,0 +1,64 @@
+# Custom Caddyfile passed to Octane's FrankenPHP server (--caddyfile).
+#
+# It is Octane's stock frankenphp Caddyfile (vendor/laravel/octane/src/Commands/
+# stubs/Caddyfile) with ONE addition: a `header` block that strips the response
+# headers which fingerprint the stack for tools like Wappalyzer / BuiltWith:
+#   - Server         (e.g. "FrankenPHP Caddy")
+#   - X-Powered-By   (e.g. "PHP/8.4.25" — also leaks the exact version)
+#   - Via
+#
+# Keep the rest of this file in sync with Octane's stub on upgrades.
+
+{
+	{$CADDY_GLOBAL_OPTIONS}
+
+	admin {$CADDY_SERVER_ADMIN_HOST}:{$CADDY_SERVER_ADMIN_PORT}
+
+	frankenphp {
+		worker {
+			file "{$APP_PUBLIC_PATH}/frankenphp-worker.php"
+			{$CADDY_SERVER_WORKER_DIRECTIVE}
+			{$CADDY_SERVER_WATCH_DIRECTIVES}
+		}
+	}
+}
+
+{$CADDY_EXTRA_CONFIG}
+
+{$CADDY_SERVER_SERVER_NAME} {
+	log {
+		level {$CADDY_SERVER_LOG_LEVEL}
+
+		# Redact the authorization query parameter that can be set by Mercure...
+		format filter {
+			wrap {$CADDY_SERVER_LOGGER}
+			fields {
+				uri query {
+					replace authorization REDACTED
+				}
+			}
+		}
+	}
+
+	route {
+		root * "{$APP_PUBLIC_PATH}"
+		encode zstd br gzip
+
+		# Strip stack-identifying response headers.
+		header {
+			-Server
+			-X-Powered-By
+			-Via
+		}
+
+		# Mercure configuration is injected here...
+		{$CADDY_SERVER_EXTRA_DIRECTIVES}
+
+		php_server {
+			index frankenphp-worker.php
+			try_files {path} frankenphp-worker.php
+			# Required for the public/storage/ directory...
+			resolve_root_symlink
+		}
+	}
+}
